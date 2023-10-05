@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Piano</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="audiosynth.js"></script>
+</head>
+<body>
+  <div id="piano">
+    <div id="logo"><img src="note.png"> Responsive Piano</div>
+    <div id="keys"></div>
+  </div>
+ <script>
+    const notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const octaves = {
+      '3':'q2w3er5t6y7u',
+      '4':'i9o0p[=]azsx',
+      '5':'cfvgbnjmk,l.'
+     };
+    let octave_keys = '';
+    for (const o in octaves) {
+        //octave_keys += '<div class="octave" data-octave="'+o+'">';
+       octave_keys += `<div class="octave" data-octave="${o}">`;
+      for (let i=0; i<notes.length; i++) {
+        const note = notes[i];
+        const conlor = note.indexOf('#') < 0 ? 'white' : 'black';
+        const keyboard = octaves[o].charAt(i);
+        const color = note.indexOf('#')>0 ? 'black' : 'white';
+        octave_keys += `<div class="key ${color}" data-note="${note}" data-keyboard="${keyboard}">`;
+        octave_keys += `<div class="label">${keyboard}<br>${note}${o}</div>`;
+        octave_keys += '</div>';
+      }
+      octave_keys += '</div>';
+}
+    document.getElementById('keys').innerHTML = octave_keys;
+
+    Synth.setVolume(0.5);
+    function playNote(key) {
+    const note = key.dataset.note;
+    const octave = key.parentElement.dataset.octave;
+
+    Synth.play(0,note, octave, 4);
+    }
+    const keys = document.querySelectorAll('.key');
+    for (let key of keys) {
+    key.addEventListener('mousedown', function () {
+      playNote(key);
+    });
+  }
+  window.addEventListener('keydown', function (event) {
+    const keyboard = event.key;
+    const key = document.querySelector(`.key[data-keyboard="${keyboard}"]`);
+    if (key) {
+      if (!key.classList.contains('pressed')) {
+        key.classList.add('pressed');
+        playNote(key);
+      }
+    }
+  });  
+  window.addEventListener('keyup', function (event) {
+    const keyboard = event.key;
+    const key = document.querySelector(`.key[data-keyboard="${keyboard}"]`);
+    if (key) {
+      key.classList.remove('pressed');
+    }
+  });
+ </script>
+</body>
+</html>
