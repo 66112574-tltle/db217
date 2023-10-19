@@ -67,7 +67,7 @@ header > h1 {
 }
 
 #comp-choice {
-    transform: rotateY(180drg) !important;
+    transform: rotateY(180deg) !important;
 }
 
 #choice {
