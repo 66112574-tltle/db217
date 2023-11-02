@@ -9,12 +9,14 @@ const message = document.querySelector('#message');
 const overlay = document.querySelector('#overlay');
 
 function getComputerChoice() {
+      // Logic to get a random computer choice
   const choice = ['rock', 'paper', 'scissors'];
   const randomIndex = Math.floor(Math.random() * 3);
   return choice[randomIndex];
 }
 
 function win(userChoice, compChoice) {
+      // Logic for user win
   userScore_span.innerHTML = ++userScore;
   result_div.innerHTML =
     `${userChoice.toUpperCase()} beats ` +
@@ -23,6 +25,7 @@ function win(userChoice, compChoice) {
 }
 
 function loses(userChoice, compChoice) {
+    // Logic for user loss
   compScore_span.innerHTML = ++compScore;
   result_div.innerHTML =
     `${compChoice.toUpperCase()} beats ` +
@@ -31,11 +34,13 @@ function loses(userChoice, compChoice) {
 }
 
 function draw(choice) {
+      // Logic for a draw
   result_div.innerHTML =
     `It was a draw! You both chose ${choice.toUpperCase()}.`;
 }
 
 function game(userChoice) {
+     // Logic to play the game
   message.hidden = true;
   overlay.hidden = false;
   user_choice.classList.remove('ready');
@@ -63,6 +68,7 @@ function game(userChoice) {
 }
 
 function ready() {
+     // Reset the game for the next round
   user_choice.classList.remove('winner');
   comp_choice.classList.remove('winner');
   user_choice.setAttribute('src', 'images/rock.png');
